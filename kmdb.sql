@@ -62,19 +62,85 @@
 -- The Dark Knight Rises  Joseph Gordon-Levitt  John Blake
 -- The Dark Knight Rises  Anne Hathaway         Selina Kyle
 
--- Turns column mode on but headers off
+-- Turns column mode on but headers on
 .mode column
 .headers off
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
--- TODO!
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS castings;
 
 -- Create new tables, according to your domain model
--- TODO!
+CREATE TABLE movies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    year_released TEXT,
+    MPAA_rating TEXT,
+    director TEXT
+);
+
+CREATE TABLE castings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    actor_name TEXT,
+    role_name TEXT,
+    movie_id INTEGER
+);
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
--- TODO!
+INSERT INTO movies (title,year_released,MPAA_rating,director)
+VALUES ("Batman Begins", "2005", "PG-13", "Christopher Nolan");
+
+INSERT INTO movies (title,year_released,MPAA_rating,director)
+VALUES ("The Dark Knight", "2008", "PG-13", "Christopher Nolan");
+
+INSERT INTO movies (title,year_released,MPAA_rating,director)
+VALUES ("The Dark Knight Rises", "2012", "PG-13", "Christopher Nolan");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Christian Bale", "Bruce Wayne", "1");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Christian Bale", "Bruce Wayne", "2");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Christian Bale", "Bruce Wayne", "3");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Michael Caine", "Alfred", "1");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Michael Caine", "Alfred", "2");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Liam Neeson", "Ra's Al Ghul", "1");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Katie Holmes", "Rachel Dawes", "1");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Gary Oldman", "Commissioner Gordon", "1");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Gary Oldman", "Commissioner Gordon", "3");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Heath Ledger", "Joker", "2");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Aaron Eckhart", "Harvey Dent", "2");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Maggie Gyllenhaal", "Rachel Dawes", "2");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Tom Hardy", "Bane", "3");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Jospeh Gordon-Levitt", "John Blake", "3");
+
+INSERT INTO castings (actor_name, role_name, movie_id)
+VALUES ("Anne Hathaway", "Selina Kyle", "3");
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -82,7 +148,10 @@
 .print ""
 
 -- The SQL statement for the movies output
--- TODO!
+SELECT title, year_released, MPAA_rating, director FROM movies; 
+
+-- Increasing width of the column
+.width 27 SELECT title
 
 -- Prints a header for the cast output
 .print ""
@@ -92,4 +161,6 @@
 
 
 -- The SQL statement for the cast output
--- TODO!
+SELECT movies.title, castings.actor_name, castings.role_name
+FROM castings INNER JOIN movies ON movies.id = castings.movie_id
+ORDER BY movies.title
